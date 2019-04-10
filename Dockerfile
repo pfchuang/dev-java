@@ -4,9 +4,14 @@ MAINTAINER "lukechuang"<poteninearn@gmail.com>
 # Basic tools
 RUN yum -q -y update && \
     yum -q -y install wget && \
-    yum -q -y install vim && \
     yum -q -y install unzip && \
     yum -q -y install git
+
+# Vim 8
+RUN rpm -U --quiet http://mirror.ghettoforge.org/distributions/gf/gf-release-latest.gf.el7.noarch.rpm && \
+    rpm --import --quiet http://mirror.ghettoforge.org/distributions/gf/RPM-GPG-KEY-gf.el7 && \
+    yum -q -y remove vim-minimal && \
+    yum -q -y --enablerepo=gf-plus install vim-enhanced
 
 # Oracle Java 8
 RUN wget --quiet --no-cookies --no-check-certificate --header \
@@ -19,23 +24,29 @@ RUN wget --quiet --no-cookies --no-check-certificate --header \
 ENV JAVA_HOME /usr/bin/java
 
 # Gradle
-RUN wget --quiet https://services.gradle.org/distributions/gradle-5.0-bin.zip && \
-    unzip -qq gradle-5.0-bin.zip -d /opt && \
-    rm -f gradle-5.0-bin.zip
+RUN wget --quiet https://services.gradle.org/distributions/gradle-2.6-bin.zip && \
+    unzip -qq gradle-2.6-bin.zip -d /opt && \
+    rm -f gradle-2.6-bin.zip
 
-ENV GRADLE_HOME /opt/gradle-5.0
+ENV GRADLE_HOME /opt/gradle-2.6
 
 # PATH
 ENV PATH $GRADLE_HOME/bin:$JAVA_HOME/bin:$PATH
 
-# panthogen & javacomplete
-RUN mkdir -p /root/.vim/autoload /root/.vim/bundle && \
-    wget --quiet -P /root/.vim/autoload https://tpo.pe/pathogen.vim && \
-    echo "execute pathogen#infect()" >> /root/.vimrc && \
-    echo "syntax on" >> /root/.vimrc && \
-    echo "filetype plugin indent on" >> /root/.vimrc && \
-    git clone https://github.com/artur-shaik/vim-javacomplete2.git /root/.vim/bundle/vim-javacomplete2 && \
-    echo "autocmd FileType java setlocal omnifunc=javacomplete#Complete" >> /root/.vimrc
+# Vundle & vim-javacomplete2
+RUN mkdir -p ~/.vim/bundle && \
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
+    echo "set nocompatible" >> ~/.vimrc && \
+    echo "filetype off" >> ~/.vimrc && \
+    echo "set rtp+=~/.vim/bundle/Vundle.vim" >> ~/.vimrc && \
+    echo "call vundle#begin()" >> ~/.vimrc && \
+    echo "Plugin 'VundleVim/Vundle.vim'" >> ~/.vimrc && \
+    echo "Plugin 'artur-shaik/vim-javacomplete2'" >> ~/.vimrc && \
+    echo "call vundle#end()" >> ~/.vimrc && \
+    echo "syntax on" >> ~/.vimrc && \
+    echo "filetype plugin indent on" >> ~/.vimrc && \
+    vim +PluginInstall +qall && \
+    echo "autocmd FileType java setlocal omnifunc=javacomplete#Complete" >> ~/.vimrc
 
 # gradle-templates
 RUN mkdir /data && \
@@ -57,4 +68,3 @@ WORKDIR /data
 
 # Define default command
 CMD ["bash"]
-
