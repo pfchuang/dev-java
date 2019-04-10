@@ -1,0 +1,4 @@
+docker build -t luke/dev-java github.com/pfchuang/dev-java
+docker run -it luke/dev-java
+# docker run -it --rm luke/dev-java
+
