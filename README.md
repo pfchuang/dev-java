@@ -6,7 +6,7 @@ docker build -t luke/dev-java github.com/pfchuang/dev-java
 ```shell=
 docker run -it luke/dev-java
 ```
-Run container and delete it automatically when leaving vim.
+(Optional) Automatically delete when leaving container.
 ```shell=
 docker run -it --rm luke/dev-java
 ```
