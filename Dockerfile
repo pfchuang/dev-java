@@ -5,13 +5,8 @@ MAINTAINER "lukechuang"<poteninearn@gmail.com>
 RUN yum -q -y update && \
     yum -q -y install wget && \
     yum -q -y install unzip && \
+    yum -q -y install vim && \
     yum -q -y install git
-
-# Vim 8
-RUN rpm -U --quiet http://mirror.ghettoforge.org/distributions/gf/gf-release-latest.gf.el7.noarch.rpm && \
-    rpm --import --quiet http://mirror.ghettoforge.org/distributions/gf/RPM-GPG-KEY-gf.el7 && \
-    yum -q -y remove vim-minimal && \
-    yum -q -y --enablerepo=gf-plus install vim-enhanced
 
 # Oracle Java 8
 RUN wget --quiet --no-cookies --no-check-certificate --header \
@@ -33,14 +28,13 @@ ENV GRADLE_HOME /opt/gradle-2.6
 # PATH
 ENV PATH $GRADLE_HOME/bin:$JAVA_HOME/bin:$PATH
 
-# panthogen & javacomplete
-RUN mkdir -p ~/.vim/autoload ~/.vim/bundle && \
-    wget --quiet -P ~/.vim/autoload https://tpo.pe/pathogen.vim && \
-    echo "execute pathogen#infect()" >> ~/.vimrc && \
-    echo "syntax on" >> ~/.vimrc && \
-    echo "filetype plugin indent on" >> ~/.vimrc && \
-    git clone https://github.com/artur-shaik/vim-javacomplete2.git /root/.vim/bundle/vim-javacomplete2 && \
-    echo "autocmd FileType java setlocal omnifunc=javacomplete#Complete" >> ~/.vimrc
+# javacomplete
+RUN mkdir ~/.vim && \
+    wget --quiet http://www.vim.org/scripts/download_script.php?src_id=14914 -O javacomplete.zip && \
+    unzip -qq javacomplete.zip -d ~/.vim && \
+    rm javacomplete.zip && \
+    echo "setlocal omnifunc=javacomplete#Complete" >> ~/.vimrc && \
+    echo "inoremap <buffer> . .<C-X><C-O><C-P>" >> ~/.vimrc
 
 # gradle-templates
 RUN mkdir /data && \
