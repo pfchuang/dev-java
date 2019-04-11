@@ -34,13 +34,13 @@ ENV GRADLE_HOME /opt/gradle-2.6
 ENV PATH $GRADLE_HOME/bin:$JAVA_HOME/bin:$PATH
 
 # panthogen & javacomplete
-RUN mkdir -p /root/.vim/autoload /root/.vim/bundle && \
-    wget --quiet -P /root/.vim/autoload https://tpo.pe/pathogen.vim && \
-    echo "execute pathogen#infect()" >> /root/.vimrc && \
-    echo "syntax on" >> /root/.vimrc && \
-    echo "filetype plugin indent on" >> /root/.vimrc && \
+RUN mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+    wget --quiet -P ~/.vim/autoload https://tpo.pe/pathogen.vim && \
+    echo "execute pathogen#infect()" >> ~/.vimrc && \
+    echo "syntax on" >> ~/.vimrc && \
+    echo "filetype plugin indent on" >> ~/.vimrc && \
     git clone https://github.com/artur-shaik/vim-javacomplete2.git /root/.vim/bundle/vim-javacomplete2 && \
-    echo "autocmd FileType java setlocal omnifunc=javacomplete#Complete" >> /root/.vimrc
+    echo "autocmd FileType java setlocal omnifunc=javacomplete#Complete" >> ~/.vimrc
 
 # gradle-templates
 RUN mkdir /data && \
