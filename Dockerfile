@@ -28,13 +28,9 @@ ENV GRADLE_HOME /opt/gradle-2.6
 # PATH
 ENV PATH $GRADLE_HOME/bin:$JAVA_HOME/bin:$PATH
 
-# javacomplete
-RUN mkdir ~/.vim && \
-    wget --quiet http://www.vim.org/scripts/download_script.php?src_id=14914 -O javacomplete.zip && \
-    unzip -qq javacomplete.zip -d ~/.vim && \
-    rm javacomplete.zip && \
-    echo "setlocal omnifunc=javacomplete#Complete" >> ~/.vimrc && \
-    echo "inoremap <buffer> . .<C-X><C-O><C-P>" >> ~/.vimrc
+# .vimrc & Vim-plugins
+RUN wget --quiet https://github.com/pfchuang/dev-java/.vimrc && \
+    vim +PluginInstall +all
 
 # gradle-templates
 RUN mkdir /data && \
