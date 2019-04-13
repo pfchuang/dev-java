@@ -29,7 +29,7 @@ ENV GRADLE_HOME /opt/gradle-2.6
 ENV PATH $GRADLE_HOME/bin:$JAVA_HOME/bin:$PATH
 
 # .vimrc & Vim-plugins
-RUN wget --quiet https://github.com/pfchuang/dev-java/.vimrc && \
+RUN wget --quiet https://github.com/pfchuang/dev-java/raw/master/.vimrc && \
     vim +PluginInstall +all
 
 # gradle-templates
