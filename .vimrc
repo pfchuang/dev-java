@@ -27,6 +27,7 @@ filetype plugin indent on
 autocmd Filetype java setlocal omnifunc=javacomplete#Complete
 autocmd Filetype java inoremap <buffer> . .<C-X><C-O><C-P>
 map <F5> :NERDTreeToggle<CR>
+map! <F5> <Esc>:NERDTreeToggle<CR>
  
 "#######################################################
 syntax enable
@@ -60,35 +61,6 @@ set hlsearch
 hi CursorLine cterm=none ctermbg=DarkMagenta ctermfg=none
 hi CursorColumn cterm=none ctermbg=DarkMagenta ctermfg=none
 hi Search cterm=reverse ctermbg=none ctermfg=none
- 
-"#######################################################
-" statusline
-"set laststatus=2
-"set statusline=%#filepath#[%{expand('%:p')}]%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]%#filesize#%{FileSize()}%{IsBinary()}%=%#position#%c,%l/%L\ [%3p%%]
-"hi filepath cterm=none ctermbg=238 ctermfg=40
-"hi filetype cterm=none ctermbg=238 ctermfg=45
-"hi filesize cterm=none ctermbg=238 ctermfg=225
-"hi position cterm=none ctermbg=238 ctermfg=228
-"function IsBinary()
-"    if (&binary == 0)
-"        return ""
-"    else
-"        return "[Binary]"
-"    endif
-"endfunction
-"function FileSize()
-"    let bytes = getfsize(expand("%:p"))
-"    if bytes <= 0
-"        return "[Empty]"
-"    endif
-"    if bytes < 1024
-"        return "[" . bytes . "B]"
-"    elseif bytes < 1048576
-"        return "[" . (bytes / 1024) . "KB]"
-"    else
-"        return "[" . (bytes / 1048576) . "MB]"
-"    endif
-"endfunction
  
 "#######################################################
 " encode
