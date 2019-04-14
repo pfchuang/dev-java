@@ -31,7 +31,8 @@ ENV PATH $GRADLE_HOME/bin:$JAVA_HOME/bin:$PATH
 # .vimrc & Vim-plugins
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
     wget --quiet https://github.com/pfchuang/dev-java/raw/master/.vimrc -O ~/.vimrc && \
-    vim +PluginInstall +qall
+    vim +PluginInstall +qall && \
+    echo "alias vi='vi -u NONE'" >> /etc/bashrc
 
 # gradle-templates
 RUN mkdir /data && \

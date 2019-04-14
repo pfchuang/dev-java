@@ -22,7 +22,6 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'javacomplete'
 
 call vundle#end()
-
 filetype plugin indent on
 
 autocmd Filetype java setlocal omnifunc=javacomplete#Complete
