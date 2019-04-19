@@ -9,9 +9,12 @@ RUN yum -q -y update && \
     yum -q -y install git
 
 # Oracle Java 8
-RUN wget --quiet --no-cookies --no-check-certificate --header \
-    "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-    "https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jdk-8u201-linux-x64.tar.gz" && \
+RUN wget --quiet --load-cookies /tmp/cookies.txt \
+    "https://drive.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies \
+    /tmp/cookies.txt --keep-session-cookies --no-check-certificate \
+    'https://drive.google.com/uc?export=download&id=143jwThgXOenC09yiQ3SrNfL_rCWnUS8h' \
+    -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=143jwThgXOenC09yiQ3SrNfL_rCWnUS8h" \
+    -O jdk-8u201-linux-x64.tar.gz && rm -rf /tmp/cookies.txt && \
     tar -zxf jdk-8u201-linux-x64.tar.gz -C /usr/local && \
     ln -s /usr/local/jdk1.8.0_201 /usr/bin/java && \
     rm -f jdk-8u201-linux-x64.tar.gz
