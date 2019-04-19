@@ -6,7 +6,7 @@ docker build -t luke/dev-java github.com/pfchuang/dev-java
 ```shell=
 docker run -it luke/dev-java
 ```
-(Optional) Automatically delete when leaving container.
+(or) Automatically delete container when leaving.
 ```shell=
 docker run -it --rm luke/dev-java
 ```
