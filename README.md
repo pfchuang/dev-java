@@ -2,6 +2,10 @@
 ```shell=
 docker build -t luke/dev-java github.com/pfchuang/dev-java
 ```
+or
+```shell=
+docker pull luke29/dev-java
+```
 ## Docker Run
 ```shell=
 docker run -it luke/dev-java
