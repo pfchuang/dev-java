@@ -24,7 +24,9 @@ ENV JAVA_HOME /usr/bin/java
 # Gradle
 RUN wget --quiet https://services.gradle.org/distributions/gradle-2.6-bin.zip && \
     unzip -qq gradle-2.6-bin.zip -d /opt && \
-    rm -f gradle-2.6-bin.zip
+    rm -f gradle-2.6-bin.zip && \
+    mkdir ~/.gradle && \
+    echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
 
 ENV GRADLE_HOME /opt/gradle-2.6
 
